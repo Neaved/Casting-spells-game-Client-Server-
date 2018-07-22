@@ -11,12 +11,15 @@ public class Game {
 
     private Map<String, Room> rooms;
 
-    public boolean isRunning;
+    private boolean isRunning = true;
     private Player player;
 
     public void startGame() {
-        isRunning = true;
         createWorld();
+        createPlayer();
+    }
+
+    private void createPlayer() {
         player = new Player();
         player.setRoom(rooms.get(LIVING_ROOM_LOC));
     }
@@ -64,36 +67,28 @@ public class Game {
     }
 
     public String letsPlay(String message) {
-        showStartDescription();
-
-        String[] commands = message.split(SPACES_SYMBOL);
-        if (commands.length > 3) {
-            return UNKNOWN_CMD;
-        }
-        String command = commands[0];
-        switch (command) {
-            case GO_CMD:
-                return player.goToAnotherRoomCommand(commands[1]);
-            case GET_CMD:
-                return player.getItemsCommand(commands[1]);
-            case USE_CMD:
-                String firstItemName = commands[1];
-                String secondItemName = commands[2];
-                Integer intResult = player.useItemsCommand(firstItemName, secondItemName);
-                if (intResult == 3) {
-                    isRunning = false;
-                }
-                return RESULT_OF_USE_CMD.get(intResult);
-            case INVENTORY_CMD:
-                return player.showInventoryCommand();
-
-            case LOOK_CMD:
-                return player.getDescriptionOfCurrentRoomCommand();
-
-            case EXIT_CMD:
-                isRunning = false;
-                return GAME_OVER_DESCRIPTION;
-
+        String[] commands = message.split(SPACE_SYMBOL);
+        if (commands.length < 4) {
+            String command = commands[0];
+            switch (command) {
+                case GO_CMD:
+                    return player.goToAnotherRoomCommand(commands[1]);
+                case GET_CMD:
+                    return player.getItemsCommand(commands[1]);
+                case USE_CMD:
+                    Integer intResult = player.useItemsCommand(commands[1], commands[2]);
+                    isEndGame(THIRD_RESULT_OF_USE_CMD.equals(intResult));
+                    return RESULT_OF_USE_CMD_MAPPING.get(intResult);
+                case INVENTORY_CMD:
+                    return player.showInventoryCommand();
+                case LOOK_CMD:
+                    return player.getDescriptionOfCurrentRoomCommand();
+                case DESCR_CMD:
+                    return player.showItemDescriptionCommand(commands[1]);
+                case EXIT_CMD:
+                    isEndGame(true);
+                    return GAME_OVER_DESCRIPTION;
+            }
         }
         return UNKNOWN_CMD;
     }
@@ -102,7 +97,9 @@ public class Game {
         return isRunning;
     }
 
-    private void showStartDescription() {
-        System.out.println(DEFAULT_START_GAME_DESCRIPTION);
+    private void isEndGame(boolean endGame) {
+        if (endGame) {
+            isRunning = false;
+        }
     }
 }

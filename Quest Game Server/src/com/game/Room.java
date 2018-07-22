@@ -27,7 +27,7 @@ public class Room {
     }
 
     public String getDescription() {
-        StringBuilder description = new StringBuilder(getRoomDescription());
+        StringBuilder description = new StringBuilder(getDefaultRoomDescription());
         setDescription(description.append(getInventoryStuffNames()).toString());
         return this.description;
     }
@@ -36,7 +36,7 @@ public class Room {
         this.description = description;
     }
 
-    private String getRoomDescription() {
+    private String getDefaultRoomDescription() {
         switch (name) {
             case LIVING_ROOM_LOC:
                 return DEFAULT_LIVING_ROOM_DESCRIPTION;

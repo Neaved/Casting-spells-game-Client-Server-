@@ -1,4 +1,6 @@
-package main.java;
+package com.game.client;
+
+import com.game.exceptions.ShowToUserException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,8 +12,9 @@ import java.util.concurrent.Executors;
 
 public class ChatClient {
 
-    private final String HOST = "127.0.0.1";
-    private final int PORT = 4444;
+    private static final String HOST = "127.0.0.1";
+    private static final int PORT = 4444;
+    private static final String CONNECT_MESSAGE = "Соединение установлено.";
 
     public static void main(String[] args) {
         new ChatClient().start();
@@ -27,7 +30,7 @@ public class ChatClient {
             executor.execute(new MessageReader(socket, reader));
             executor.shutdown();
 
-            System.out.println("Соединение установлено");
+            System.out.println(CONNECT_MESSAGE);
 
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -37,8 +40,8 @@ public class ChatClient {
                 writer.flush();
             }
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            new ShowToUserException(ex);
         }
     }
 

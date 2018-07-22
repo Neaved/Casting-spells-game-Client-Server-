@@ -17,26 +17,26 @@ public class Bucket extends Item {
         this.bucketWithWater = false;
     }
 
-     public Integer craft(Item item, Room room) {
+    public Integer craft(Item item, Room room) {
         String roomName = room.getName();
 
         if (item instanceof Well && isBucketWithChain() && GARDEN_LOC.equals(roomName)) {
             bucketWithWater = true;
-            return 1;
+            setDescription(BUCKET_ITEM_WITH_WATER_DESCRIPTION);
+            return FIRST_RESULT_OF_USE_CMD;
         }
 
         if (item instanceof Well && GARDEN_LOC.equals(roomName)) {
-            return 2;
+            return SECOND_RESULT_OF_USE_CMD;
         }
 
         if (item instanceof Wizard && isBucketWithWater() && LIVING_ROOM_LOC.equals(roomName)) {
-                        awakeWizard(room, (Wizard) item);
-
-            return 3;
+            awakeWizard(room, (Wizard) item);
+            return THIRD_RESULT_OF_USE_CMD;
         } else if (item instanceof Wizard && LIVING_ROOM_LOC.equals(roomName)) {
-            return 4;
+            return FOURTH_RESULT_OF_USE_CMD;
         }
-         return 5;
+        return FIFTH_RESULT_OF_USE_CMD;
     }
 
     private void awakeWizard(Room room, Wizard awakeWizard) {

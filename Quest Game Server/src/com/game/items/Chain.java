@@ -13,48 +13,23 @@ public class Chain extends Item {
         super(name, description, isStatic);
     }
 
-    public Integer craft(Item item, Room room, Inventory inventory) {
+    public Integer craft(Item item, Room room, Inventory playerInventory) {
         String roomName = room.getName();
-        if (item instanceof Bucket
-                && ATTIC_LOC.equals(roomName)) {
-
-            ArrayList<Item> playerInventory = inventory.getInventory();
-            Chain chain = null;
-            for (Item playerItem : playerInventory) {
-                if (playerItem.getName().equals(CHAIN_ITEM_NAME)) {
-                    chain = (Chain) playerItem;
-                }
-            }
-            if (chain != null) {
-                playerInventory.remove(chain);
-            }
-            Bucket newBucket = (Bucket) item;
-            playerInventory.remove(item);
-            newBucket.setBucketWithChain(true);
-            playerInventory.add(newBucket);
-            return 6;
-        }
-    return 7;
-    }
-
-
-/*
-    public void craft(Item item, Room room, Inventory playerInventory) {
-        if (item instanceof Bucket && ATTIC_LOC.equals(room.getName())) {
+        if (item instanceof Bucket && ATTIC_LOC.equals(roomName)) {
             ArrayList<Item> playerInventoryItems = playerInventory.getInventoryItems();
             playerInventoryItems.remove(getChainFromPlayerInventory(playerInventoryItems));
             ((Bucket) item).setBucketWithChain(true);
             item.setDescription(BUCKET_ITEM_WITH_CHAIN_DESCRIPTION);
             playerInventoryItems.add(item);
-            System.out.println(BUCKET_ITEM_WITH_CHAIN_ACTION_DESCRIPTION);
+            return SIXTH_RESULT_OF_USE_CMD;
         }
+        return SEVENTH_RESULT_OF_USE_CMD;
     }
 
     private Chain getChainFromPlayerInventory(ArrayList<Item> playerInventoryItems) {
         return (Chain) playerInventoryItems
                 .stream()
                 .filter(playerItem -> CHAIN_ITEM_NAME.equals(playerItem.getName()))
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
-*/
 }

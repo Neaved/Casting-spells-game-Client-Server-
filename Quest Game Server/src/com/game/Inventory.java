@@ -3,6 +3,7 @@ package com.game;
 import com.game.items.Item;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.game.Constants.*;
@@ -43,7 +44,7 @@ public class Inventory {
         return inventory
                 .stream()
                 .filter(item -> item.getName().equals(itemName))
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
 
     @Override

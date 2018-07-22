@@ -10,8 +10,8 @@ public class Constants {
     public static final String COMMAS_SYMBOL = "\'";
     public static final String SPACE_SYMBOL = " ";
     public static final String START_TYPE_SYMBOL = "> ";
-    public static final String COMMA_AND_SPACE_SYMBOLS = COMMA_SYMBOL + SPACE_SYMBOL;
 
+    public static final String START_CMD = "старт";
     public static final String EXIT_CMD = "выйти";
     public static final String GET_CMD = "взять";
     public static final String GO_CMD = "идти";
@@ -48,6 +48,7 @@ public class Constants {
     public static final String WELL_ITEM_DESCRIPTION = "Колодец с водой.";
     public static final String CHAIN_ITEM_DESCRIPTION = "Длинная цепь.";
 
+    public static final String FIRST_ACTION = "Введите 'старт', чтобы начать, либо 'выйти', чтобы завершить.";
     public static final String INVALID_ACTION = "Недопустимое действие.";
     public static final String INVALID_MOVE_ACTION = "Вы не можете туда пойти.";
     public static final String YOU_HAVE_ACTION = "У Вас есть ";
@@ -59,7 +60,10 @@ public class Constants {
     public static final String INVENTORY_STUFF = "Доступные вещи в инвенторе: ";
     public static final String EMPTY_INVENTORY_STUFF = "У Вас нет вещей в инвенторе.";
 
-    public static final String DEFAULT_START_GAME_DESCRIPTION = "Осмотритесь. Необходимо понять где вы находитесь.";
+    public static final String START_GAME_DESCRIPTION = "Игра началась.\nОсмотритесь. Необходимо понять где вы находитесь.";
+    public static final String END_GAME_DESCRIPTION = "Игра окончена. Нажмите Ввод, чтобы выйти.";
+    public static final String GAME_OVER_DESCRIPTION = "Вы вышли из игры.";
+    public static final String EXIT_GAME_DESCRIPTION = "Нажмите Ввод, чтобы выйти.";
 
     public static final String DEFAULT_LIVING_ROOM_DESCRIPTION =
             "Вы находитесь в гостиной в доме волшебника. А вот и он сам - громко храпит на кровати.\n"
@@ -80,16 +84,31 @@ public class Constants {
             WIZARD_ITEM_NAME
     );
 
-    public static final Map<Integer, String> RESULT_OF_USE_CMD = new HashMap<Integer, String>() {
+    private static final String BUCKET_ITEM_WITH_CHAIN_ACTION_DESCRIPTION = "Теперь цепь надежно приварена к ведру.";
+    private static final String GET_BUCKET_WITH_WATER_ACTION_DESCRIPTION =
+            "Держа ведро за цепь, вы опускаете его в колодец и поднимаете полным до краев.";
+    private static final String CAN_NOT_GET_WATER_ACTION_DESCRIPTION = "Вода слишком далеко. Не достать.";
+    private static final String BUCKET_WITHOUT_WATER_ACTION_DESCRIPTION = "В ведре пусто.";
+    private static final String AWAKE_WIZARD_ACTION_DESCRIPTION = "Волшебник вскакивает и начинает отряхиваться. Приведя себя в порядок,\n"
+            + "он благодарит вас за помощь и протягивает вам магический кристалл. Вы выиграли!";
+
+    public static final Integer FIRST_RESULT_OF_USE_CMD = 1;
+    public static final Integer SECOND_RESULT_OF_USE_CMD = 2;
+    public static final Integer THIRD_RESULT_OF_USE_CMD = 3;
+    public static final Integer FOURTH_RESULT_OF_USE_CMD = 4;
+    public static final Integer FIFTH_RESULT_OF_USE_CMD = 5;
+    public static final Integer SIXTH_RESULT_OF_USE_CMD = 6;
+    public static final Integer SEVENTH_RESULT_OF_USE_CMD = 7;
+
+    public static final Map<Integer, String> RESULT_OF_USE_CMD_MAPPING = new HashMap<Integer, String>() {
         {
-            put(1, "Держа ведро за цепь, вы опускаете его в колодец и поднимаете полным до краев.");
-            put(2, "Вода слишком далеко. Не достать.");
-            put(3, "Волшебник вскакивает и начинает отряхиваться. Приведя себя в порядок, он\n"
-                    + "благодарит вас за помощь и протягивает вам магический кристалл. Вы выиграли!");
-            put(4, "В ведре пусто.");
-            put(5, CAN_NOT_USE_BUCKET_ON_BUCKET_ACTION);
-            put(6, "Теперь цепь надежно приварена к ведру.");
-            put(7, INVALID_ACTION);
+            put(FIRST_RESULT_OF_USE_CMD, GET_BUCKET_WITH_WATER_ACTION_DESCRIPTION);
+            put(SECOND_RESULT_OF_USE_CMD, CAN_NOT_GET_WATER_ACTION_DESCRIPTION);
+            put(THIRD_RESULT_OF_USE_CMD, AWAKE_WIZARD_ACTION_DESCRIPTION);
+            put(FOURTH_RESULT_OF_USE_CMD, BUCKET_WITHOUT_WATER_ACTION_DESCRIPTION);
+            put(FIFTH_RESULT_OF_USE_CMD, CAN_NOT_USE_BUCKET_ON_BUCKET_ACTION);
+            put(SIXTH_RESULT_OF_USE_CMD, BUCKET_ITEM_WITH_CHAIN_ACTION_DESCRIPTION);
+            put(SEVENTH_RESULT_OF_USE_CMD, INVALID_ACTION);
         }
     };
 
